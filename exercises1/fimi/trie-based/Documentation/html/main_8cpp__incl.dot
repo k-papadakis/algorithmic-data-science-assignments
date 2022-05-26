@@ -1,0 +1,16 @@
+digraph G
+{
+  edge [fontname="Helvetica",fontsize=10,labelfontname="Helvetica",labelfontsize=10];
+  node [fontname="Helvetica",fontsize=10,shape=record];
+  Node80 [label="main.cpp",height=0.2,width=0.4,color="white", fillcolor="black", style="filled" fontcolor="white"];
+  Node81 -> Node80 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node81 [label="iostream",height=0.2,width=0.4,color="grey75"];
+  Node82 -> Node80 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node82 [label="fstream",height=0.2,width=0.4,color="grey75"];
+  Node83 -> Node80 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node83 [label="Apriori.hpp",height=0.2,width=0.4,color="black",URL="$Apriori_8hpp.html"];
+  Node84 -> Node83 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node84 [label="Apriori_Trie.hpp",height=0.2,width=0.4,color="red",URL="$Apriori__Trie_8hpp.html"];
+  Node90 -> Node83 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node90 [label="map",height=0.2,width=0.4,color="grey75"];
+}
