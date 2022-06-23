@@ -1,0 +1,125 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+% \usepackage[LGR, T1]{fontenc}
+
+% \usepackage[greek]{babel} % This automatically transcribes letters. Use \textlatin to escape it
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{amsthm}
+% \usepackage{bbm}
+% \usepackage{alphabeta}
+% \usepackage{graphicx}
+% \graphicspath{ {../output/} }
+% \usepackage{hyperref}
+
+
+
+% To make custom snippets, Ctrl+shift+P --> Preferences: Configure User Snippets -> latex (or latex.json)
+
+% \newcommand{\inner}[2]{\left\langle #1 \mathrel{,} #2 \right\rangle}
+% \newcommand{\norm}[1]{\left\| #1 \right\|}
+% \newcommand{\T}[1]{{#1}^{\top}}  % alternatively, use {#1}^{\intercal} or {#1}'
+% \newcommand{\ve}[1]{\boldsymbol{#1}}
+
+
+\title{Algorithmic Data Science - Exercises Series 2}
+\author{
+    Konstantinos Papadakis\\
+    Data Science and Machine Learning 03400149\\
+    konstantinospapadakis@mail.ntua.gr
+}
+\date{\today}
+
+
+\begin{document}
+
+\maketitle
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% EXERCISE 1
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercise 1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1(a)
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{(a)}
+We have that 
+\begin{align*}
+    &h_{a,b}(x) = h_{a,b}(y)\\
+    \iff& ax + b \equiv ay + b \mod{m}\\
+    \iff& a(x-y) \equiv 0 \mod{m}
+\end{align*}
+which in the case of \(x=m, \  y = 0\) is true \(\forall a, b\)
+therefore
+\[P(h_{a,b}(x) = h_{a,b}(y)) = 1 > \frac{1}{m}\]
+meaning that the family is not universal.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1(b)
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{(b)}
+
+This exercise is \emph{Theorem 11.5} in the book \emph{Introduction to Algorithms by Cormen et al.}.
+
+Let \(x, y \in \mathbb{Z}_p: x \neq y\).
+
+Define
+\begin{align*}
+    u &:= ax + b \mod{p}\\
+    v &:= ay + b \mod{p}
+\end{align*}
+
+Note that \(u \neq v\)
+since \(u - v \equiv a (x - y) \not\equiv 0 \mod{p}\)
+because \(a \neq 0\) and \(x \not\equiv y \mod{p}\),
+the later holding because by hypothesis \(x \neq y \ \textrm{and}\ x,y < p\)
+Therefore, there are no collisions when we apply \(x \mapsto ax + b \mod{p}\).
+
+We proceed to show that
+\((a, b) \mapsto (ax + b \mod{p},\ ax + b \mod{p})\) is a bijection between
+the pairs \((a, b) \in \mathbb{Z}_p^* \times \mathbb{Z}_p\)
+and the pairs \((u, v) \in \mathbb{Z}_p \times \mathbb{Z}_p: u \neq v\).
+
+We can solve for \(a, b\) and get a unique solution
+\begin{align*}
+    a &= \frac{u-v}{x-y} \mod{p}\\
+    b &= r - ak \mod{p}
+\end{align*}
+Where \(\frac{1}{t}\) is the inverse of \(t\) in \(\mathbb{Z}_p\)
+
+Therefore the mapping is one to one.
+Since we also have that both the domain and the codomain have \(p(p-1)\) elements,
+the mapping is a bijection.
+Thus, if \((a, b)\) is uniformely distributed, so is \((u, v)\).
+
+Therefore, the probability that \(x, y \in \mathbb{Z}_p: x \neq y\) collide
+is equal to the probability that \(u \equiv v \mod{m}\) collide
+when \((u, v) \in \mathbb{Z}_p \times \mathbb{Z}_p: u \neq v\) are chosen uniformely randomly.
+We proceed to calculate that probability.
+
+Given \(u\), of the \(p-1\) possible remaining values for \(v\) we have that
+at most \(\lceil{\frac{p}{m}}\rceil - 1 \leq \frac{p-1}{m}\)
+can collide with \(u\). 
+
+Therefore the probability of colision is \(\leq \frac{1}{m}\),
+meaning that the hash function family is universal.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1(c)
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{(c)}\label{1c}
+
+The proof in \ref{1c} is still valid, since \(x \in U \implies x < p\) is still valid.
+Therefore the hash function family remains universal.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% EXERCISE 2
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercise 2}
+
+
+
+\end{document}
