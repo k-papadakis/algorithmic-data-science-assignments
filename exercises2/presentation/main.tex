@@ -1,9 +1,6 @@
 \documentclass{article}
 
 \usepackage[utf8]{inputenc}
-% \usepackage[LGR, T1]{fontenc}
-
-% \usepackage[greek]{babel} % This automatically transcribes letters. Use \textlatin to escape it
 \usepackage{amsmath, amsfonts, amssymb}
 \usepackage{amsthm}
 % \usepackage{bbm}
@@ -13,16 +10,18 @@
 % \usepackage{hyperref}
 
 
+% To make custom snippets, Ctrl+shift+P
+% --> Preferences: Configure User Snippets -> latex (or latex.json)
 
-% To make custom snippets, Ctrl+shift+P --> Preferences: Configure User Snippets -> latex (or latex.json)
+\DeclareMathOperator{\E}{\textrm{E}}
 
 % \newcommand{\inner}[2]{\left\langle #1 \mathrel{,} #2 \right\rangle}
 % \newcommand{\norm}[1]{\left\| #1 \right\|}
-% \newcommand{\T}[1]{{#1}^{\top}}  % alternatively, use {#1}^{\intercal} or {#1}'
+% \newcommand{\T}[1]{{#1}^{\top}} %alternatively, use {#1}^{\intercal} or {#1}'
 % \newcommand{\ve}[1]{\boldsymbol{#1}}
 
 
-\title{Algorithmic Data Science - Exercises Series 2}
+\title{Algorithmic Data Science - Exercise Series 2}
 \author{
     Konstantinos Papadakis\\
     Data Science and Machine Learning 03400149\\
@@ -34,10 +33,12 @@
 \begin{document}
 
 \maketitle
-
 \newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % EXERCISE 1
+%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Exercise 1}
 
@@ -61,7 +62,7 @@ meaning that the family is not universal.
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{(b)}
 
-This exercise is \emph{Theorem 11.5} in the book \emph{Introduction to Algorithms by Cormen et al.}.
+This exercise is \emph{Theorem 11.5} in \cite{clrs}.
 
 Let \(x, y \in \mathbb{Z}_p: x \neq y\).
 
@@ -90,20 +91,21 @@ We can solve for \(a, b\) and get a unique solution
 Where \(\frac{1}{t}\) is the inverse of \(t\) in \(\mathbb{Z}_p\)
 
 Therefore the mapping is one to one.
-Since we also have that both the domain and the codomain have \(p(p-1)\) elements,
-the mapping is a bijection.
-Thus, if \((a, b)\) is uniformely distributed, so is \((u, v)\).
+Since we also have that both the domain and the co-domain have
+\(p(p-1)\) elements, the mapping is a bijection.
+Thus, if \((a, b)\) is uniformly distributed, so is \((u, v)\).
 
 Therefore, the probability that \(x, y \in \mathbb{Z}_p: x \neq y\) collide
 is equal to the probability that \(u \equiv v \mod{m}\) collide
-when \((u, v) \in \mathbb{Z}_p \times \mathbb{Z}_p: u \neq v\) are chosen uniformely randomly.
+when \((u, v) \in \mathbb{Z}_p \times \mathbb{Z}_p: u \neq v\)
+are chosen uniformly randomly.
 We proceed to calculate that probability.
 
 Given \(u\), of the \(p-1\) possible remaining values for \(v\) we have that
 at most \(\lceil{\frac{p}{m}}\rceil - 1 \leq \frac{p-1}{m}\)
 can collide with \(u\). 
 
-Therefore the probability of colision is \(\leq \frac{1}{m}\),
+Therefore the probability of collision is \(\leq \frac{1}{m}\),
 meaning that the hash function family is universal.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -111,15 +113,95 @@ meaning that the hash function family is universal.
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{(c)}\label{1c}
 
-The proof in \ref{1c} is still valid, since \(x \in U \implies x < p\) is still valid.
+The proof in \ref{1c} is still valid,
+since \(x \in U \implies x < p\) is still valid.
 Therefore the hash function family remains universal.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
 % EXERCISE 2
+%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Exercise 2}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2(a)
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{(a)}
 
+From what I understand,
+the expected number of probes for a successful search is not equal to 
+the expected number of probes for an insertion.
+What \cite{clrs} says in the proof of \emph{Corollary 11.7} is that
+the expected number of probes for an \emph{Unsuccessful} search is
+equal to the expected number of probes for an insertion,
+and that number is bounded above by \(\frac{1}{1-a}\)
+where \(a\) is the load factor.
 
+The expected number of probes a for a successful search on the other hand
+is bounded above by \(\frac{1}{a} \ln\frac{1}{1-a}\),
+as shown in \emph{Theorem 11.8}.
+
+If the expected values were equal,
+wouldn't the book bound them by the same number?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2(b)
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{(b)}
+
+First we need to show that the expected number of probes in an unsuccessful
+search is bounded by \(\frac{1}{1-a}\).
+
+Let X be a random variable describing
+the number of probes in an unsuccessful search.
+
+We have
+\begin{align*}
+    \E[X]
+        &= \sum_{i = 0}^\infty i \Pr(X = i)\\
+        &= \sum_{i = 1}^\infty \Pr(X \geq i)
+\end{align*}
+
+Now,
+\begin{align*}
+    \Pr(X \geq i)
+        &= \frac{n}{m} \cdot \frac{n-1}{m-1} \cdots \frac{n-i+2}{m-i+2}\\
+        &\leq \left( \frac{n}{m} \right) ^ {i-1}\\
+        &= a^{i-1}
+\end{align*}
+
+Therefore,
+\begin{equation*}
+    \E[X] \leq \sum_{i = 1}^\infty a^{i-1} = \frac{1}{1-a}
+\end{equation*}
+
+Since an element is inserted only
+if there is room in the table (thus \(a < 1\)),
+inserting a key requires an unsuccessful search
+followed by placing the key into the first empty slot found.
+Thus, the expected number of probes for an insertion
+is at most \(\frac{1}{1-a}\).
+
+We now proceed to prove the result about the successful search.
+
+A search for a key reproduces the same probe sequence as when the
+element with key was inserted.
+By the above result, if the element was the (\(i+1\))st element inserted,
+then the expected number of probes made in a search for it
+is at most \(\frac{1}{1 - 1/m} = \frac{m}{m-i}\).
+
+Therefore the expected number of probes for a successful search is
+\begin{align*}
+    \frac{1}{n} \sum_{i=0}^{n-1} \frac{m}{m-i}
+        &= \frac{1}{a} \sum_{i=0}^{n-1} \frac{1}{m-i}\\
+        &= \frac{1}{a} \sum_{k=m-n+1}^m \frac{1}{k}\\
+        &\leq \frac{1}{a} \int_{m-n}^m \frac{1}{x} dx\\
+        &= \frac{1}{a} \ln\frac{m}{m-n}\\
+        &= \frac{1}{a} \ln\frac{1}{1-a}
+\end{align*}
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
 \end{document}
