@@ -3,6 +3,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath, amsfonts, amssymb}
 \usepackage{amsthm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 % \usepackage{bbm}
 % \usepackage{alphabeta}
 % \usepackage{graphicx}
@@ -201,6 +203,100 @@ Therefore the expected number of probes for a successful search is
         &= \frac{1}{a} \ln\frac{m}{m-n}\\
         &= \frac{1}{a} \ln\frac{1}{1-a}
 \end{align*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% EXERCISE 3
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercise 3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 3(a)
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{(a)}
+
+\begin{algorithm}[hbt!]
+\caption{Girvan-Newman}\label{alg:gn}
+\begin{algorithmic}[1]
+
+    \For{each e in E}
+        \State{e.betweenness $\gets$ 0}
+    \EndFor
+    \\
+    \For{each r in V}
+        \State{G $\gets$ DAG by performing BFS from r}
+        
+        \For{each v in G}
+            \State{v.npaths $\gets 1$}
+        \EndFor
+        
+        \State{
+            Cumulatively sum node npaths from leaves to root (post-order DFS)
+        }
+        
+        \For{each v in G}
+            \State{v.credit $\gets 1$}
+        \EndFor
+        
+        \For {v in post-order DFS(r)}
+            \State{s $\gets 0$}
+            
+            \For{neighbor u of v incoming from above}
+                \State{s $\gets$ s + u.npaths}
+            \EndFor
+            
+            \For{each edge e incoming to v from the above node u}
+                \State{e.tempbetweenness $\gets$ v.credit * u.npaths / s}
+                \State{u.credit $\gets$ u.credit + e.tempbetweenness}
+            \EndFor
+        \EndFor
+        \For{each e in E}
+            \State{e.betweenness $\gets$ e.betweenness + e.tempbetweenness/2}
+        \EndFor
+    \EndFor
+\end{algorithmic}
+\end{algorithm}
+
+We proceed to calculate the time complexity of the Girvan-Newman algorithm,
+shown in Algorithm \ref{alg:gn}.
+We iterate over \(|V|\) nodes, so everything will be multiplied by \(|V|\).
+The BFS step takes \(O(|V| + |E|)\) time.
+The accumulation with DFS also takes \(O(|V| + |E|)\) time.
+The betweenness calculation takes \(O(|V|+2|E|) = O(|V| + |E|)\) time as well.
+Therefore, we end up with \(O(|V| (|V| + |E|))\) time.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 3(b)
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{(b)}
+In the case of a tree,
+since a tree is by definition an undirected acyclic graph,
+it can also be viewed as a DAG,
+meaning that we don't need to perform the BFS step.
+Also, in the second DFS part, since tree nodes have only one parent,
+we don't need to compute the \verb|u.npaths/s| factor
+because it's always equal to 1.
+The complexity doesn't change in the end,
+since the DFS still takes \(O(|V| + |E|)\) time.
+Finally in a tree we have that $|E| = |V| - 1$.
+Thus the complexity can now be written as \(O(|V|^2)\).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% EXERCISE 4
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercise 4}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 4(10.4.1)
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{(10.4.1)}
+
+
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}

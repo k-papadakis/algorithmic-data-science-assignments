@@ -2,5 +2,10 @@
     "makefile.extensionOutputFolder": "./.vscode",
     "editor.rulers": [
         80
+    ],
+    "cSpell.words": [
+        "betweenness",
+        "Girvan",
+        "npaths"
     ]
 }
