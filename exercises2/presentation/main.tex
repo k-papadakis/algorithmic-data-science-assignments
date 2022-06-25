@@ -448,6 +448,84 @@ Considering the cut \(\{1\}, \{2,3\}, \{4,5\}, \{6\}\), we have
 \end{align*}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% EXERCISE 6
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercise 6}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 6(8.2.1)
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{Exercise 8.2.1 of \cite{mmds}}
+
+% https://home.ttic.edu/~avrim/Algo19/lectures/Online.pdf
+
+First of all, we assume that the prices
+for renting and purchasing are not variable,
+or at least that the rent price divides the purchase price.
+
+Consider the strategy \(A\) where
+we rent until we realize we should have bought, then buy.
+(In our case this means we rent 9 times, then buy).
+In symbols, if \(p\) is the purchase price and \(r\) is the rent price,
+we rent \(\lceil \frac{p}{r} \rceil\) times, and then we buy.
+
+We analyze the cost of \(A\), when \(r\) divides \(p\).
+
+\begin{itemize}
+    \item In the case (subset of all inputs) where we ski
+        fewer than \(p / r\) times, then our strategy is optimal.
+    \item In the case where we ski \(p / r\) or more times,
+        then the optimal strategy would be to buy from the beginning,
+        paying only \(p\).
+        Strategy \(A\) on the other hand, would pay
+        \((p/r - 1) r + p = p - r + p = 2p - r\).
+\end{itemize}
+
+So the optimal strategy costs us \(p\) while strategy \(A\),
+in the worst case, costs us \(2p - r\).
+
+Since we are talking about costs instead of earnings,
+it's natural to use the competitive \emph{cost} ratio (the lower the better).
+Strategy \(A\) has competitive cost ratio  \(\frac{2p - r}{p} = 2 - \frac{r}{p}\).
+
+We now proceed to prove that
+if \(r\) divides \(p\), then the strategy \(A\) is optimal
+among all other deterministic online strategies.
+
+Consider an alternate deterministic strategy B.
+\begin{itemize}
+    \item If in B we never purchase,
+        then the cost is infinite.
+    \item Assume that B purchases at some point.
+        \begin{itemize}
+            \item If the purchase always happens before or at
+                \(p/r - 1\), say day \(k \leq p/r - 1\),
+                then in the worst case we pay
+                \(p\) instead of \(kr\)s,
+                which is worse than the worst case for \(A\).
+            \item If on the other hand the purchase always happens after
+                \(p/r\), say on day \(k > p/r\),
+                then in the worst case we pay
+                \((k-1)r + p > (p/r - 1)r + p = 2p - r \) instead of \(p\),
+                which is worse than the worst case for \(A\).
+        \end{itemize}
+\end{itemize}
+
+Therefore strategy \(A\) is optimal among all other deterministic online strategies,
+if \(r\) divides \(p\).
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 6(8.4.1)
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{Exercise 8.4.1 of \cite{mmds}}
+
+
+
 \bibliographystyle{IEEEtran}
 \bibliography{references}
 \end{document}
