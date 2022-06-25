@@ -489,17 +489,18 @@ in the worst case, costs us \(2p - r\).
 
 Since we are talking about costs instead of earnings,
 it's natural to use the competitive \emph{cost} ratio (the lower the better).
-Strategy \(A\) has competitive cost ratio  \(\frac{2p - r}{p} = 2 - \frac{r}{p}\).
+Strategy \(A\) has competitive cost ratio \(\frac{2p-r}{p} = 2 - \frac{r}{p}\).
+In our case this is \(2 - \frac{10}{100} = 1.9\).
 
 We now proceed to prove that
 if \(r\) divides \(p\), then the strategy \(A\) is optimal
 among all other deterministic online strategies.
 
-Consider an alternate deterministic strategy B.
+Consider an alternate deterministic strategy \(B\).
 \begin{itemize}
-    \item If in B we never purchase,
+    \item If in \(B\) we never purchase,
         then the cost is infinite.
-    \item Assume that B purchases at some point.
+    \item Assume that \(B\) purchases at some point.
         \begin{itemize}
             \item If the purchase always happens before or at
                 \(p/r - 1\), say day \(k \leq p/r - 1\),
@@ -514,15 +515,28 @@ Consider an alternate deterministic strategy B.
         \end{itemize}
 \end{itemize}
 
-Therefore strategy \(A\) is optimal among all other deterministic online strategies,
-if \(r\) divides \(p\).
-
+Therefore strategy \(A\) is optimal among all other
+deterministic online strategies, if \(r\) divides \(p\).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % 6(8.4.1)
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{Exercise 8.4.1 of \cite{mmds}}
+ 
+Whatever we do C, will be assigned 2 queries.
+The worst case is to assign x to B (or C), then assign x to C (or B),
+leaving A with no assignments;
+then we are left with two slots which cannot be filled
+The other worst cases work similarly,
+that is we assign a specific type of query
+to advertisers that bid on multiple types of queries,
+instead of assigning them to advertisers that bid only on that specific query.
+
+The greedy algorithm can assign the query yyzz to C, C, None, None,
+while the optimal algorithm assigns to B, B, C, C.
+The greedy algorithm in this case assigned only half the number of queries
+compared to the number of queries that the optimal algorithm assigned.
 
 
 
