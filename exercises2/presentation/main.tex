@@ -567,11 +567,11 @@ and 3.3 for the main-memory size.
 
 The resulting utility matrix after transforming it as the exercises say is
 \begin{equation*}
-    \begin{bmatrix}
+    \begin{pmatrix}
         1 & 1 & 0 & 1 & 0 & 0 & 1 & 0\\
         0 & 1 & 1 & 1 & 0 & 0 & 0 & 0\\
         0 & 0 & 0 & 1 & 0 & 1 & 1 & 1
-    \end{bmatrix}
+    \end{pmatrix}
 \end{equation*}
 
 The Jaccard distances can be computed by calling
@@ -580,7 +580,7 @@ The Jaccard distances can be computed by calling
 with argument \verb|metric = 'jaccard'|
 
 \begin{equation*}
-    \begin{bmatrix}
+    \begin{pmatrix}
         0\\
         1/2 & 0\\
         1 & 1/2 & 0\\
@@ -589,7 +589,7 @@ with argument \verb|metric = 'jaccard'|
         1 & 1 & 1 & 2/3 & 1 & 0\\
         1/2 & 2/3 & 1 & 1/3 & 1 & 1/2 & 0\\
         1 & 1 & 1 & 2/3 & 1 & 0 & 1/2 & 0
-    \end{bmatrix}
+    \end{pmatrix}
 \end{equation*}
 
 We start with each element in separate clusters.
@@ -605,11 +605,11 @@ resulting in the four clusters
 On each cluster we average over the non-empty entries for each user
 and the new utility matrix is
 \begin{equation*}
-    \begin{bmatrix}
+    \begin{pmatrix}
         17/4 & 2 & 0 & 1\\
         7/3 & 2 & 4 & 1\\
         10/3 & 7/2 & 1 & 0\\
-    \end{bmatrix}
+    \end{pmatrix}
 \end{equation*}
 
 The cosine distances can be computed by calling
@@ -618,14 +618,12 @@ The cosine distances can be computed by calling
 with argument \verb|metric = 'cosine'|
 
 \begin{equation*}
-    \begin{bmatrix}
+    \begin{pmatrix}
         0\\
         0.396 & 0\\
         0.107 & 0.260 & 0\\
-    \end{bmatrix}
+    \end{pmatrix}
 \end{equation*}
-
-
 
 
 \bibliographystyle{IEEEtran}
