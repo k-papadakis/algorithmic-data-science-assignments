@@ -117,9 +117,9 @@ meaning that the hash function family is universal.
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % 1(c)
 %%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection*{(c)}\label{1c}
+\subsubsection*{(c)}
 
-The proof in \ref{1c} is still valid,
+The proof in (b) is still valid,
 since \(x \in U \implies x < p\) is still valid.
 Therefore the hash function family remains universal.
 
@@ -145,7 +145,7 @@ equal to the expected number of probes for an insertion,
 and that number is bounded above by \(\frac{1}{1-a}\)
 where \(a\) is the load factor.
 
-The expected number of probes a for a successful search on the other hand
+The expected number of probes for a successful search on the other hand
 is bounded above by \(\frac{1}{a} \ln\frac{1}{1-a}\),
 as shown in \emph{Theorem 11.8}.
 
@@ -192,8 +192,8 @@ is at most \(\frac{1}{1-a}\).
 
 We now proceed to prove the result about the successful search.
 
-A search for a key reproduces the same probe sequence as when the
-element with key was inserted.
+A search for an element reproduces the same probe sequence
+as when the element was inserted.
 By the above result, if the element was the (\(i+1\))st element inserted,
 then the expected number of probes made in a search for it
 is at most \(\frac{1}{1 - 1/m} = \frac{m}{m-i}\).
@@ -415,7 +415,7 @@ and then multiply by two.
         \left(
             \sum_{\substack{i,j \in \{1,2,3\} \\ i\neq j}}
                 \left( 1 - \frac{k_i k_j}{2m} \right)
-            -\sum_{i \in \{1,2,3\}}k_i^2
+            -\sum_{i \in \{1,2,3\}}\frac{k_i^2}{2m}
         \right)\\
       &= \frac{1}{8}
         \left(
@@ -462,9 +462,8 @@ Considering the cut \(\{1\}, \{2,3\}, \{4,5\}, \{6\}\), we have
 
 % https://home.ttic.edu/~avrim/Algo19/lectures/Online.pdf
 
-First of all, we assume that the prices
-for renting and purchasing are not variable,
-or at least that the rent price divides the purchase price.
+We assume that the prices are constant, and prove a general result
+for the case when the rent price divides the purchase price.
 
 Consider the strategy \(A\) where
 we rent until we realize we should have bought, then buy.
@@ -472,7 +471,7 @@ we rent until we realize we should have bought, then buy.
 In symbols, if \(p\) is the purchase price and \(r\) is the rent price,
 we rent \(\lceil \frac{p}{r} \rceil\) times, and then we buy.
 
-We analyze the cost of \(A\), when \(r\) divides \(p\).
+We analyze the cost of \(A\).
 
 \begin{itemize}
     \item In the case (subset of all inputs) where we ski
@@ -484,8 +483,8 @@ We analyze the cost of \(A\), when \(r\) divides \(p\).
         \((p/r - 1) r + p = p - r + p = 2p - r\).
 \end{itemize}
 
-So the optimal strategy costs us \(p\) while strategy \(A\),
-in the worst case, costs us \(2p - r\).
+So, in the worst case, the optimal strategy costs us \(p\)
+while strategy \(A\) costs us \(2p - r\).
 
 Since we are talking about costs instead of earnings,
 it's natural to use the competitive \emph{cost} ratio (the lower the better).
@@ -500,12 +499,12 @@ Consider an alternate deterministic strategy \(B\).
 \begin{itemize}
     \item If in \(B\) we never purchase,
         then the cost is infinite.
-    \item Assume that \(B\) purchases at some point.
+    \item Assume that in \(B\) we purchase at some point.
         \begin{itemize}
             \item If the purchase always happens before or at
                 \(p/r - 1\), say day \(k \leq p/r - 1\),
                 then in the worst case we pay
-                \(p\) instead of \(kr\)s,
+                \(p\) instead of \(kr\),
                 which is worse than the worst case for \(A\).
             \item If on the other hand the purchase always happens after
                 \(p/r\), say on day \(k > p/r\),
@@ -524,7 +523,7 @@ deterministic online strategies, if \(r\) divides \(p\).
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{Exercise 8.4.1 of \cite{mmds}}
  
-Whatever we do C, will be assigned 2 queries.
+Whatever we do, C will be assigned 2 queries.
 The worst case is to assign x to B (or C), then assign x to C (or B),
 leaving A with no assignments;
 then we are left with two slots which cannot be filled
@@ -537,6 +536,95 @@ The greedy algorithm can assign the query yyzz to C, C, None, None,
 while the optimal algorithm assigns to B, B, C, C.
 The greedy algorithm in this case assigned only half the number of queries
 compared to the number of queries that the optimal algorithm assigned.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% EXERCISE 7
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercise 7}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 7(9.2.3)
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{Exercise 9.2.3 of \cite{mmds}}
+
+The mean of the ratings \(4, 2, 5\) is \(\frac{11}{3}\).
+We normalize by subtracting by the mean and thus getting
+\(\frac{1}{3}, -\frac{5}{3}, \frac{4}{3}\).
+
+The user profile is computed by the dot product of each product row
+and the normalized user ratings.
+The results are 0.46 for the processor speed,
+486.6 for the disk size,
+and 3.3 for the main-memory size.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 7(9.3.2)
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{Exercise 9.3.2 of \cite{mmds}}
+
+The resulting utility matrix after transforming it as the exercises say is
+\begin{equation*}
+    \begin{bmatrix}
+        1 & 1 & 0 & 1 & 0 & 0 & 1 & 0\\
+        0 & 1 & 1 & 1 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 1 & 0 & 1 & 1 & 1
+    \end{bmatrix}
+\end{equation*}
+
+The Jaccard distances can be computed by calling
+\verb|pairwise_distances| from 
+\verb|sklearn.metrics|
+with argument \verb|metric = 'jaccard'|
+
+\begin{equation*}
+    \begin{bmatrix}
+        0\\
+        1/2 & 0\\
+        1 & 1/2 & 0\\
+        2/3 & 1/3 & 2/3 & 0\\
+        1 & 1 & 1 & 1 & 0\\
+        1 & 1 & 1 & 2/3 & 1 & 0\\
+        1/2 & 2/3 & 1 & 1/3 & 1 & 1/2 & 0\\
+        1 & 1 & 1 & 2/3 & 1 & 0 & 1/2 & 0
+    \end{bmatrix}
+\end{equation*}
+
+We start with each element in separate clusters.
+We then merge \(\{f\}\) and \(\{h\}\),
+then \(\{b\}\) and \(\{d\}\),
+then \(\{b, d\}\) and \(\{g\}\),
+then \(\{a\}\) and \(\{b,d,g\}\),
+resulting in the four clusters
+\begin{equation*}
+    C_1 = \{a,b,d,g\},\ C_2 = \{f,h\},\ C_3 = \{c\},\ C_4 = \{e\}
+\end{equation*}
+
+On each cluster we average over the non-empty entries for each user
+and the new utility matrix is
+\begin{equation*}
+    \begin{bmatrix}
+        17/4 & 2 & 0 & 1\\
+        7/3 & 2 & 4 & 1\\
+        10/3 & 7/2 & 1 & 0\\
+    \end{bmatrix}
+\end{equation*}
+
+The cosine distances can be computed by calling
+\verb|pairwise_distances| from 
+\verb|sklearn.metrics|
+with argument \verb|metric = 'cosine'|
+
+\begin{equation*}
+    \begin{bmatrix}
+        0\\
+        0.396 & 0\\
+        0.107 & 0.260 & 0\\
+    \end{bmatrix}
+\end{equation*}
+
 
 
 
