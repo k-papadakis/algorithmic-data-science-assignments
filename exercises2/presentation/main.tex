@@ -469,7 +469,7 @@ Consider the strategy \(A\) where
 we rent until we realize we should have bought, then buy.
 (In our case this means we rent 9 times, then buy).
 In symbols, if \(p\) is the purchase price and \(r\) is the rent price,
-we rent \(\lceil \frac{p}{r} \rceil\) times, and then we buy.
+we rent \(\frac{p}{r}\) times, and then we buy.
 
 We analyze the cost of \(A\).
 
@@ -491,8 +491,7 @@ it's natural to use the competitive \emph{cost} ratio (the lower the better).
 Strategy \(A\) has competitive cost ratio \(\frac{2p-r}{p} = 2 - \frac{r}{p}\).
 In our case this is \(2 - \frac{10}{100} = 1.9\).
 
-We now proceed to prove that
-if \(r\) divides \(p\), then the strategy \(A\) is optimal
+We now proceed to prove that strategy \(A\) is optimal
 among all other deterministic online strategies.
 
 Consider an alternate deterministic strategy \(B\).
