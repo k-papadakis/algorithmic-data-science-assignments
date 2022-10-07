@@ -1,4 +1,4 @@
-# Algorithm Data Science assignments
+# Algorithmic Data Science assignments
 
 ![A graph with two levels of dead ends](exercises1/images/figure-5-4.png)
 
